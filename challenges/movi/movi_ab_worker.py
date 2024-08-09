@@ -52,9 +52,9 @@ parser = kb.ArgumentParser()
 # Configuration for the objects of the scene
 parser.add_argument("--objects_set", choices=["clevr", "kubasic"],
                     default="clevr")
-parser.add_argument("--min_num_objects", type=int, default=3,
+parser.add_argument("--min_num_objects", type=int, default=1,
                     help="minimum number of objects")
-parser.add_argument("--max_num_objects", type=int, default=10,
+parser.add_argument("--max_num_objects", type=int, default=1,
                     help="maximum number of objects")
 # Configuration for the floor and background
 parser.add_argument("--floor_friction", type=float, default=0.3)
