@@ -5,7 +5,7 @@ import torch
 from tqdm import tqdm
 import sys
 sys.path.append('/fsx/yban/intern/large-scale-video-generation')
-from cccccbngjkknulbuhmodels.language.backbones.t5_language_model import T5LanguageModel
+from models.language.backbones.t5_language_model import T5LanguageModel
 from utils import load_json, dump_pickle
 import pandas as pd
 
@@ -30,6 +30,7 @@ if __name__ == "__main__":
     df = pd.read_csv(DATA_CAPTION_DIR)
 
     summary_text = df.text.tolist()
+    # summary_text = [' '.join(val.split(' ')[:80]) for val in summary_text]
     path = df.path
     
     all_embeds, all_eot_locs, all_token_ids = [], [], []
@@ -39,13 +40,13 @@ if __name__ == "__main__":
             embedding_results = language_model(summary_text_batch, torch.float32)
         embeddings = embedding_results["text_embeddings"].cpu().numpy()
         embeddings = [emb for emb in embeddings]  # make a list of np.ndarray
-        eot_locations = embedding_results["eot_locations"]
-        token_ids = embedding_results["token_ids"]
+        eot_locations = embedding_results["eot_locations"].cpu().numpy()
+        token_ids = embedding_results["token_ids"].cpu().numpy()
 
         all_embeds.extend(embeddings)
         all_eot_locs.extend(eot_locations)
         all_token_ids.extend(token_ids)
-
+    print(all_eot_locs)
     for i, filename in enumerate(path):
         result = {
             "embeddings": all_embeds[i],  # list of np.ndarray of shape [L (128), C (1024)]
