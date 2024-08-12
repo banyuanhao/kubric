@@ -5,7 +5,7 @@ import torch
 from tqdm import tqdm
 import sys
 sys.path.append('/fsx/yban/intern/large-scale-video-generation')
-from models.language.backbones.t5_language_model import T5LanguageModel
+from cccccbngjkknulbuhmodels.language.backbones.t5_language_model import T5LanguageModel
 from utils import load_json, dump_pickle
 import pandas as pd
 

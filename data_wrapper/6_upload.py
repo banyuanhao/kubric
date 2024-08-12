@@ -72,7 +72,7 @@ def create_webdataset(input_args):
         compress_into_tar(upload_list, os.path.join(SHARD_DIR, shard_filename))
 
         # Uploads the shard to S3
-        s3.upload_file(os.path.join(SHARD_DIR, shard_filename), "snap-webdataset-videos", "yban/synthetic/synthetic_one_direction/" + shard_filename)
+        s3.upload_file(os.path.join(SHARD_DIR, shard_filename), "snap-webdataset-videos", "synthetic_one_direction/" + shard_filename)
         with open(output_log_file, "a") as f:
             video_count = sum(1 for video_file in upload_list if video_file.endswith(".mp4"))
             f.write(datetime.now(timezone("US/Pacific")).strftime("%m/%d %H:%M:%S") + " %s (including %i videos) is uploaded\n"%(shard_filename, video_count))
