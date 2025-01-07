@@ -1,0 +1,1 @@
+docker run --interactive            --user $(id -u):$(id -g)            --volume "$(pwd):/kubric"   --volume "/nfs/data/banyuanhao:/nfs/data/banyuanhao"         kubricdockerhub/kubruntu   bash ./shell_3.sh
