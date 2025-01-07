@@ -47,13 +47,9 @@ def create_webdataset(input_args):
             break
         upload_list += [i for i in upload_list_per_video if os.path.isfile(i)]
 
-        # Gets the size of the current video
         video_size = os.path.getsize(os.path.join(VIDEO_DIR, video_filename))
         video_size_mb = video_size / (1024**2)
         shard_size += video_size_mb
-
-        if shard_size > shard_size_mb:
-            # Create shard
             compress_into_tar(upload_list, os.path.join(SHARD_DIR, shard_filename))
 
             # Uploads the shard to S3
@@ -62,11 +58,7 @@ def create_webdataset(input_args):
                 video_count = sum(1 for video_file in upload_list if video_file.endswith(".mp4"))
                 f.write(datetime.now(timezone("US/Pacific")).strftime("%m/%d %H:%M:%S") + " %s (including %i videos) is uploaded\n"%(shard_filename, video_count))
 
-            # Initialize a new shard and increment shard_id
             shard_size = 0
-            shard_id += 1
-            shard_filename = f"n{node_id:05d}_t{task_id:05d}_s{shard_id:07d}.tar"
-            upload_list = []
 
     # Flush the last shard
     if shard_size > 0:
